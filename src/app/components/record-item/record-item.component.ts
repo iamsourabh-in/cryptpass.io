@@ -19,15 +19,9 @@ export class RecordItemComponent implements OnInit {
   conversionEncryptOutput: string = '';
   conversionDecryptOutput: string = '';
   profileForm = this.fb.group({
-    mainpass: [''],
+    mainpass: ['', Validators.required],
     aliases: this.fb.array([
-      // this.fb.group({
-      //   title: ['', Validators.required],
-      //   username: ['', Validators.required],
-      //   password: ['', Validators.required],
-      //   URL: ['', Validators.required],
-      //   note: ['', Validators.required],
-      // })
+
     ])
   });
 
@@ -44,6 +38,9 @@ export class RecordItemComponent implements OnInit {
       URL: ['', Validators.required],
       note: ['', Validators.required],
     }));
+  }
+  removeAlias(i) {
+    this.aliases.removeAt(i);
   }
 
   ngOnInit(): void {
@@ -90,20 +87,31 @@ export class RecordItemComponent implements OnInit {
 
         this.uploadedFiletext = reader.result.toString();
 
-        this.conversionDecryptOutput = CryptoJS.AES.decrypt(this.uploadedFiletext, 'asd').toString(CryptoJS.enc.Utf8);
+        try {
+          var passkey = prompt("Please enter your password", "");
+          if (passkey != null) {
 
-        console.log(this.conversionDecryptOutput);
+            this.conversionDecryptOutput = CryptoJS.AES.decrypt(this.uploadedFiletext, passkey).toString(CryptoJS.enc.Utf8);
 
-        let formdata = JSON.parse(this.conversionDecryptOutput);
-        formdata.forEach(element => {
-          this.aliases.push(this.fb.group({
-            title: [element.title, Validators.required],
-            username: [element.username, Validators.required],
-            password: [element.password, Validators.required],
-            URL: [element.URL, Validators.required],
-            note: [element.note, Validators.required],
-          }));
-        });
+            console.log(this.conversionDecryptOutput);
+
+            let formdata = JSON.parse(this.conversionDecryptOutput);
+            formdata.forEach(element => {
+              this.aliases.push(this.fb.group({
+                title: [element.title, Validators.required],
+                username: [element.username, Validators.required],
+                password: [element.password, Validators.required],
+                URL: [element.URL, Validators.required],
+                note: [element.note, Validators.required],
+              }));
+            });
+          }
+        }
+        catch (ex) {
+          input.files = [];
+          alert("Somthing is fisshy, you are trying to hard");
+        }
+
       }
       reader.readAsText(input.files[index]);
     };

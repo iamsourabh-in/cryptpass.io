@@ -1,14 +1,15 @@
 <div class="container">
   <input type='file' accept='text/plain' multiple (change)='openFile($event)'>
-  {{uploadedFiletext}}
+
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
     <div formArrayName="aliases">
 
       <div *ngFor="let alias of aliases.controls; let i=index">
         <!-- The repeated alias template -->
-        <div class="card mt-5 mb-5 text-white bg-secondary mb-3">
+        <div class="card mt-5  bg-light mb-3">
           <div class="card-header">
-            <label> Record {{i+1}} </label>
+            <label> Record {{i+1}} </label> &nbsp;&nbsp;
+            <span class="text-right" style="cursor: pointer;" (click)="removeAlias(i)">X</span>
           </div>
           <div class="card-body">
             <h5 class="card-title"></h5>
@@ -52,8 +53,10 @@
       </div>
     </div>
 
-    <div class="row">
-      <button type="button" class="btn btn-dark btn-sm btn-block" (click)="addAlias()">Add New Record</button>
+    <div class="row p-5">
+      <div class="col-lg-12">
+        <button type="button" class="btn btn-dark btn-sm btn-block mt-2" (click)="addAlias()">Add New Record</button>
+      </div>
     </div>
 
     <div class="row p-5">

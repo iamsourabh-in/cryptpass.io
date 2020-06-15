@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import * as CryptoJS from 'crypto-js';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-record-item',
@@ -14,37 +15,40 @@ export class RecordItemComponent implements OnInit {
     }
   }
 
-
+  uploadedFiletext: string;
   conversionEncryptOutput: string = '';
-
+  conversionDecryptOutput: string = '';
   profileForm = this.fb.group({
     mainpass: [''],
     aliases: this.fb.array([
-      this.fb.group({
-        title: ['title', Validators.required],
-        username: ['', Validators.required],
-        password: ['', Validators.required],
-        URL: ['', Validators.required],
-        note: ['', Validators.required],
-      })
+      // this.fb.group({
+      //   title: ['', Validators.required],
+      //   username: ['', Validators.required],
+      //   password: ['', Validators.required],
+      //   URL: ['', Validators.required],
+      //   note: ['', Validators.required],
+      // })
     ])
   });
-  // formArray = new FormArray(this.profileForm.controls)
+
   constructor(private fb: FormBuilder) { }
+
   get aliases() {
     return this.profileForm.get('aliases') as FormArray;
   }
   addAlias() {
     this.aliases.push(this.fb.group({
-      title: ['title', Validators.required],
+      title: ['', Validators.required],
       username: ['', Validators.required],
       password: ['', Validators.required],
       URL: ['', Validators.required],
       note: ['', Validators.required],
     }));
   }
+
   ngOnInit(): void {
   }
+
   onSubmit() {
     console.warn(this.profileForm.value);
     let userSecrets = JSON.stringify(this.profileForm.get('aliases').value);
@@ -73,6 +77,36 @@ export class RecordItemComponent implements OnInit {
 
     var event = new MouseEvent("click");
     element.dispatchEvent(event);
+  }
+
+  openFile(event) {
+
+
+    let input = event.target;
+    for (var index = 0; index < input.files.length; index++) {
+      let reader = new FileReader();
+      reader.onload = () => {
+        // this 'text' is the content of the file
+
+        this.uploadedFiletext = reader.result.toString();
+
+        this.conversionDecryptOutput = CryptoJS.AES.decrypt(this.uploadedFiletext, 'asd').toString(CryptoJS.enc.Utf8);
+
+        console.log(this.conversionDecryptOutput);
+
+        let formdata = JSON.parse(this.conversionDecryptOutput);
+        formdata.forEach(element => {
+          this.aliases.push(this.fb.group({
+            title: [element.title, Validators.required],
+            username: [element.username, Validators.required],
+            password: [element.password, Validators.required],
+            URL: [element.URL, Validators.required],
+            note: [element.note, Validators.required],
+          }));
+        });
+      }
+      reader.readAsText(input.files[index]);
+    };
   }
 
 }

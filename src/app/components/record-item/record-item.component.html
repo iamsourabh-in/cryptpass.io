@@ -1,13 +1,17 @@
 <div class="container">
+  <input type='file' accept='text/plain' multiple (change)='openFile($event)'>
+  {{uploadedFiletext}}
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
     <div formArrayName="aliases">
 
       <div *ngFor="let alias of aliases.controls; let i=index">
         <!-- The repeated alias template -->
-        <div class="card mt-5 mb-5">
+        <div class="card mt-5 mb-5 text-white bg-secondary mb-3">
+          <div class="card-header">
+            <label> Record {{i+1}} </label>
+          </div>
           <div class="card-body">
-            '
-            <h5 class="card-title"> <label> {{i+1}}</label></h5>
+            <h5 class="card-title"></h5>
             <div [formGroupName]="i">
               <div class="row">
                 <div class="col-lg-4">
@@ -46,22 +50,24 @@
           </div>
         </div>
       </div>
-
-
-
-
     </div>
 
     <div class="row">
-      <input formControlName="mainpass" class="form-control">
-      <p>
-        Form Status: {{ profileForm.status }}
-      </p>
-
-      <button class="btn btn-dark btn-sm btn-block" (click)="addAlias()">Add New Record</button>
-      <button [disabled]="!profileForm.valid" type="submit" class="btn btn-primary btn-sm btn-block">Encrypt &
-        Download</button>
+      <button type="button" class="btn btn-dark btn-sm btn-block" (click)="addAlias()">Add New Record</button>
     </div>
+
+    <div class="row p-5">
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label> Main Secret Key </label>
+          <input formControlName="mainpass" class="form-control">
+        </div>
+        <button [disabled]="!profileForm.valid" type="submit" class="btn btn-primary btn-sm btn-block">Encrypt &
+          Download</button>
+      </div>
+      <!-- <p>        Form Status: {{ profileForm.status }}      </p> -->
+    </div>
+
 
   </form>
 

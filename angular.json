@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "cryptpass"
+    }
+  },
+  "defaultProject": "cryptpass",
+  "cli": {
+    "analytics": "25a73f87-96fb-4623-b21a-b94d93255431"
+  }
 }

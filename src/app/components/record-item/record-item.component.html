@@ -1,0 +1,68 @@
+<div class="container">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="aliases">
+
+      <div *ngFor="let alias of aliases.controls; let i=index">
+        <!-- The repeated alias template -->
+        <div class="card mt-5 mb-5">
+          <div class="card-body">
+            '
+            <h5 class="card-title"> <label> {{i+1}}</label></h5>
+            <div [formGroupName]="i">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label> Title / App Name </label>
+                    <input type="text" formControlName="title" class="form-control">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label> Username </label>
+                    <input type="text" formControlName="username" class="form-control">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label> Password </label>
+                    <input type="password" formControlName="password" class="form-control">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label> URL </label>
+                    <input type="text" formControlName="URL" class="form-control">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label> Note </label>
+                    <input type="text" formControlName="note" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+
+    <div class="row">
+      <input formControlName="mainpass" class="form-control">
+      <p>
+        Form Status: {{ profileForm.status }}
+      </p>
+
+      <button class="btn btn-dark btn-sm btn-block" (click)="addAlias()">Add New Record</button>
+      <button [disabled]="!profileForm.valid" type="submit" class="btn btn-primary btn-sm btn-block">Encrypt &
+        Download</button>
+    </div>
+
+  </form>
+
+</div>

@@ -15,3 +15,8 @@ The user can close the web app and now the things are still safe as the creds ar
 ## Demo
 
 To See a demo click [here](https://coderusty.github.io/cryptpass.io/) 
+
+
+# Screenshot
+
+![home screen](https://github.com/codeRusty/cryptpass.io/blob/master/src/assets/UI.JPG?raw=true)

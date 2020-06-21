@@ -1,27 +1,17 @@
 # Cryptpass
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.6.
+The project was prepared for any person who don't trust any provider for keeping their credentials.
 
-## Development server
+This open source was built keeping this in mind. The project performs a basic tasks of encrypting multiple of yours username, password, Notes, URL of any portal and let you encrypt using one single password.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The best feature of the app is that your credentials are not saved on the server or any where.
 
-## Code scaffolding
+The Encrypted file .cp file will be downloaded in you pc keep it safe.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The User can come back and upload the .cp file and provide the password which he used to encrypt it before and will be able to see all the records he saved.
 
-## Build
+The user can close the web app and now the things are still safe as the creds are not
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Demo
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To See a demo click [here](https://coderusty.github.io/cryptpass.io/) 

@@ -1,6 +1,7 @@
 <div class="container">
   <input type='file' accept='text/plain' multiple (change)='openFile($event)'>
-
+  <input type="checkbox" (change)='togglePass($event)' ><span> Show Passwords</span>
+ 
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
     <div formArrayName="aliases">
 
@@ -18,7 +19,7 @@
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label> Title / App Name </label>
-                    <input type="text" formControlName="title" class="form-control">
+                    <input type="text" formControlName="title"  class="form-control">
                   </div>
                 </div>
                 <div class="col-lg-4">
@@ -30,7 +31,7 @@
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label> Password </label>
-                    <input type="password" formControlName="password" class="form-control">
+                    <input [type]="showPass ?'text': 'password'" formControlName="password" class="form-control">
                   </div>
                 </div>
                 <div class="col-lg-6">

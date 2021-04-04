@@ -20,17 +20,18 @@ export class AppComponent {
   constructor() {
 
   }
-  //method is used to encrypt and decrypt the text
+
+  // method is used to encrypt and decrypt the text
   convertText(conversion: string) {
-    if (conversion == "encrypt") {
-      let j = "[{ 'username' : '" + this.plainText.trim() + "'}]";
+    if (conversion === 'encrypt') {
+      const j = '[{ \'username\' : \'' + this.plainText.trim() + '\'}]';
       this.conversionEncryptOutput = CryptoJS.AES.encrypt(j, this.encPassword.trim()).toString();
     }
     else {
 
       this.conversionDecryptOutput = CryptoJS.AES.decrypt(this.encryptText.trim(), this.decPassword.trim()).toString(CryptoJS.enc.Utf8);
 
-      alert(JSON.parse(this.conversionDecryptOutput[0]['username']));
+      alert(JSON.parse(this.conversionDecryptOutput[0]["username"]));
     }
   }
 

@@ -9,15 +9,18 @@ import { JsonPipe } from '@angular/common';
   styleUrls: ['./record-item.component.css']
 })
 export class RecordItemComponent implements OnInit {
+
   private setting = {
     element: {
       dynamicDownload: null as HTMLElement
     }
-  }
+  };
 
+  showPass: boolean;
+  appName: string;
   uploadedFiletext: string;
-  conversionEncryptOutput: string = '';
-  conversionDecryptOutput: string = '';
+  conversionEncryptOutput = '';
+  conversionDecryptOutput = '';
   profileForm = this.fb.group({
     mainpass: ['', Validators.required],
     aliases: this.fb.array([
@@ -25,20 +28,34 @@ export class RecordItemComponent implements OnInit {
     ])
   });
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {
+
+    // this.profileForm.aliases.controls.forEach(
+    //   control => {
+    //     control.valueChanges.subscribe(
+    //       () => {
+    //         console.log(this.profileForm.aliases.controls.indexOf(control)); // logs index of changed item in form array
+    //       }
+    //     )
+    //   }
+    // );
+
+  }
 
   get aliases() {
     return this.profileForm.get('aliases') as FormArray;
   }
+
   addAlias() {
     this.aliases.push(this.fb.group({
       title: ['', Validators.required],
       username: ['', Validators.required],
       password: ['', Validators.required],
       URL: ['', Validators.required],
-      note: ['', Validators.required],
+      note: ['', Validators.required]
     }));
   }
+
   removeAlias(i) {
     this.aliases.removeAt(i);
   }
@@ -46,13 +63,14 @@ export class RecordItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  togglePass(event) {
+    this.showPass = event.target.checked;
+  }
+
   onSubmit() {
-    console.warn(this.profileForm.value);
     let userSecrets = JSON.stringify(this.profileForm.get('aliases').value);
     let mainPass = this.profileForm.get('mainpass') as FormControl
-    console.warn(mainPass.value);
     this.conversionEncryptOutput = CryptoJS.AES.encrypt(userSecrets, mainPass.value).toString();
-    console.warn();
     this.dyanmicDownloadByHtmlTag({
       fileName: 'secrets.cp',
       text: this.conversionEncryptOutput
